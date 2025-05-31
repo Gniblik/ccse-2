@@ -1,0 +1,66 @@
+<!DOCTYPE html>
+<html lang="en">
+
+<head>
+    {% load static %}
+
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>SecureCart</title>
+    <link rel="stylesheet" href="{% static 'style.css' %}">
+    <link rel="stylesheet" href="/static/styles.css">
+
+</head>
+
+<body>
+
+    <header class="container-header">
+        <div class="logo-container">
+            <div class="logo"></div>
+            <div class="company-name">SecureCart</div>
+        </div>
+    
+        {% if user.is_authenticated %}
+            <form action="{% url 'logout' %}" method="post" class="logout-form">
+                {% csrf_token %}
+                <button type="submit" class="logout-button">Logout</button>
+            </form>
+        {% endif %}
+        <div class="page-title">Your Orders</div>
+    </header>
+
+    <div class ="white-box">
+
+    {% block content %}
+
+        {% if page_obj %}
+            <div class="order-list">
+                {% for order in page_obj %}
+                    <div class="order-item">
+                        <p><strong>Order ID:</strong> {{ order.id }}</p>
+                        <p><strong>Status:</strong> {{ order.status }}</p>
+                        <p><strong>Total Price:</strong> £{{ order.total_price }}</p>
+                        <p><strong>Delivery Address:</strong> {{ order.delivery_address.address }}, {{ order.delivery_address.region }}</p>
+                        <p><strong>Payment Method:</strong> **** **** **** {{ order.payment_detail.last_four_digits }}</p>
+                    </div>
+                {% endfor %}
+            </div>
+
+        {% else %}
+
+            <div class = "divider-text">You have not made any orders</div>
+
+        {% endif %}
+
+    {% endblock %}
+
+    <a href="{% url 'products' %}">
+
+        <button type="button" class="long-button">Continue Shopping</button>
+    </a>
+
+    </div>
+
+</body>
+
+</html>
