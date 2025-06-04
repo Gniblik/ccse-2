@@ -54,12 +54,6 @@ stages:
         snyk test --file=requirements.txt --severity-threshold=high --command=$(System.DefaultWorkingDirectory)/env/bin/python3
       displayName: 'Run Snyk Scan'
 
-- stage: CD
-  displayName: 'CD'
-  jobs:
-  - job: cd_job
-    displayName: 'Deployment'
-    steps:
     - script: |
         sudo systemctl restart securecart
       displayName: 'Deploy Code to Existing Folder on VM'
