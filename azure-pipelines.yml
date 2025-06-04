@@ -19,7 +19,7 @@ stages:
   displayName: 'CI'
   jobs:
 
-  - job: Snyk-Scan
+  - job: Snyk_Scan
     displayName: 'Performing Snyk Scan'
     steps:
 
@@ -51,6 +51,3 @@ stages:
     - script: |
        echo 'The Test Works!'
       displayName: 'Test Script'
-
-- stage: CD
-  displayName: 'CD'
