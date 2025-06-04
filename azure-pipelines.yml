@@ -52,6 +52,5 @@ stages:
        echo 'The Test Works!'
       displayName: 'Test Script'
 
-stages:
 - stage: CD
   displayName: 'CD'
