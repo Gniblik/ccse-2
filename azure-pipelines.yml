@@ -51,5 +51,5 @@ stages:
       displayName: 'Authenticate Snyk'
 
     - script: |
-        snyk test --file=requirements.txt --severity-threshold=high
+        snyk test --file=requirements.txt --severity-threshold=high --command=$(System.DefaultWorkingDirectory)/env/bin/python3
       displayName: 'Run Snyk Scan'
