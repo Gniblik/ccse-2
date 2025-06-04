@@ -14,28 +14,21 @@ pool:
 variables:
   #pythonVersion: '3.12.10'
   pythonVersion: '3.12'
+  SNYK_TOKEN: '19b1c0e8-d849-4ed2-b3af-38665726a2ba'
 
 stages:
 - stage: CI
   displayName: 'CI'
   jobs:
 
-  - job: Snyk_Scan
-    displayName: 'Performing Snyk Scan'
+  - job: ci_job
+    displayName: 'CI (Including Snyk Scan)'
     steps:
 
-    #- task: UsePythonVersion@0
-    #  inputs:
-    #    versionSpec: '$(pythonVersion)'
-    #    addToPath: true
-
     - script: |
-        sudo apt install python3
-        sudo apt update
-        sudo apt install python3-pip
         python3 --version
         python3 -m pip --version
-      
+      displayName: 'Verify Python and pip installation.'
 
     - script: |
         python -m pip install --upgrade pip
@@ -53,10 +46,3 @@ stages:
     - script: |
         snyk test --file=requirements.txt --severity-threshold=high
       displayName: 'Run Snyk Scan'
-
-  - job: testing
-    displayName: 'Testing the pipeline!'
-    steps:
-    - script: |
-       echo 'The Test Works!'
-      displayName: 'Test Script'
