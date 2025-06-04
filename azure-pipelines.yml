@@ -1,0 +1,26 @@
+trigger:
+# defines what triggers the pipeline to run
+  branches:
+    include:
+      - main # any pushes to main
+  paths:
+    exclude: # these files do not trigger the pipeline
+    - 'README.md'
+    - '.gitignore'
+
+pool:
+  name: 'ccse-2-agent'
+
+variables:
+  pythonVersion: '3.12.10'
+
+stages:
+- stage: CI
+  displayName: 'CI'
+  jobs:
+  - job: testing
+    displayName: 'Testing our pipeline!'
+    steps:
+    - script: |
+        echo 'Our Test Works!'
+      displayName: 'Test Script'
