@@ -18,9 +18,41 @@ stages:
 - stage: CI
   displayName: 'CI'
   jobs:
-  - job: testing
-    displayName: 'Testing our pipeline!'
+
+    job: Snyk-Scan
+    displayName: 'Performing Snyk Scan'
+    steps:
+
+    - task: UsePythonVersion@0
+      inputs:
+        versionSpec: '$(pythonVersion)'
+        addToPath: true
+
+    - script: |
+        python -m pip install --upgrade pip
+        pip install -r requirements.txt
+      displayName: 'Install dependencies'
+
+    - script: |
+        npm install -g snyk
+      displayName: 'Install Snyk CLI'
+
+    - script: |
+        snyk auth $(SNYK_TOKEN)
+      displayName: 'Authenticate Snyk'
+
+    - script: |
+        snyk test --file=requirements.txt --severity-threshold=high
+      displayName: 'Run Snyk Scan'
+
+    job: testing
+    displayName: 'Testing the pipeline!'
     steps:
     - script: |
-        echo 'Our Test Works!'
+       echo 'The Test Works!'
       displayName: 'Test Script'
+
+stages:
+- stage: CD
+  displayName: 'CD'
+  jobs:
