@@ -19,7 +19,7 @@ stages:
   displayName: 'CI'
   jobs:
 
-    job: Snyk-Scan
+  - job: Snyk-Scan
     displayName: 'Performing Snyk Scan'
     steps:
 
@@ -45,7 +45,7 @@ stages:
         snyk test --file=requirements.txt --severity-threshold=high
       displayName: 'Run Snyk Scan'
 
-    job: testing
+  - job: testing
     displayName: 'Testing the pipeline!'
     steps:
     - script: |
@@ -55,4 +55,3 @@ stages:
 stages:
 - stage: CD
   displayName: 'CD'
-  jobs:
