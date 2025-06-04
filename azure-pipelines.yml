@@ -12,7 +12,8 @@ pool:
   name: 'ccse-2-agent'
 
 variables:
-  pythonVersion: '3.12.10'
+  #pythonVersion: '3.12.10'
+  pythonVersion: '3.12'
 
 stages:
 - stage: CI
