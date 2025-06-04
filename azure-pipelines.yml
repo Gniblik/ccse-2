@@ -24,10 +24,14 @@ stages:
     displayName: 'Performing Snyk Scan'
     steps:
 
-    - task: UsePythonVersion@0
-      inputs:
-        versionSpec: '$(pythonVersion)'
-        addToPath: true
+    #- task: UsePythonVersion@0
+    #  inputs:
+    #    versionSpec: '$(pythonVersion)'
+    #    addToPath: true
+
+    - script: |
+       sudo apt install python3
+       sudo apt update
 
     - script: |
         python -m pip install --upgrade pip
