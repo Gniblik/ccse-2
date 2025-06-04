@@ -34,10 +34,10 @@ stages:
       displayName: 'Python and pip installation.'
 
     - script: |
-        sudo apt install python3.12-venv
+        sudo apt install -y python3.12-venv
         python3 -m venv env
         source env/bin/python3
-        python3 -m -y pip install --upgrade pip
+        python3 -m pip install --upgrade pip
         pip install -r requirements.txt
       displayName: 'Install dependencies'
 
