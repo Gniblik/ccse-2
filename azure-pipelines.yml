@@ -42,7 +42,9 @@ stages:
       displayName: 'Install dependencies'
 
     - script: |
-        sudo apt install snyk
+        sudo apt install -y npm
+        npm install -g snyk
+
       displayName: 'Install Snyk CLI'
 
     - script: |
