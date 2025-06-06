@@ -56,19 +56,22 @@ stages:
       displayName: 'Run Snyk Scan'
 
 
+
+
 - stage: CD
   displayName: 'CD (Inclueding Zap)'
   jobs:
 
-  - job: CD
-    displayName: 'CD'
-    steps:
-
-    -task: Docker@2
+  - job: Build
     displayName: 'Build'
 
+    steps:
 
-    -task: Deploy
-
-
-    -task: Zap
+    - task: Docker@2
+      inputs:
+        command: 'buildAndPush'
+        containerRegistry: 'dockerhub'
+        repository: 'tuzzle/ccse-2'
+        dockerfile: dockerfile
+        tags: |
+          latest
