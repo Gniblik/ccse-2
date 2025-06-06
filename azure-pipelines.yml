@@ -51,9 +51,24 @@ stages:
       displayName: 'Authenticate Snyk'
 
     - script: |
-        snyk test --file=requirements.txt --severity-threshold=high --command=$(System.DefaultWorkingDirectory)/env/bin/python3
+        snyk test --file=requirements.txt --severity-threshold=high --command=$(System.DefaultWorkingDirectory)/env/bin/python
+        snyk code test --severity-threshold=high
       displayName: 'Run Snyk Scan'
 
-    - script: |
-        sudo systemctl restart securecart
-      displayName: 'Deploy Code to Existing Folder on VM'
+
+- stage: CD
+  displayName: 'CD (Inclueding Zap)'
+  jobs:
+
+  - job: CD
+    displayName: 'CD'
+    steps:
+
+    -task: Docker@2
+    displayName: 'Build'
+
+
+    -task: Deploy
+
+
+    -task: Zap

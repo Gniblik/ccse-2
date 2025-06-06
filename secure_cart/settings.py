@@ -41,6 +41,7 @@ INSTALLED_APPS = [
     'django.contrib.messages',
     'django.contrib.staticfiles',
     'encrypted_model_fields',
+#    'csp',
     'magic_and_potions.apps.MagicAndPotionsConfig',
 ]
 
@@ -52,6 +53,7 @@ MIDDLEWARE = [
     'django.contrib.auth.middleware.AuthenticationMiddleware',
     'django.contrib.messages.middleware.MessageMiddleware',
     'django.middleware.clickjacking.XFrameOptionsMiddleware',
+#    "csp.middleware.CSPMiddleware",
 ]
 
 ROOT_URLCONF = 'secure_cart.urls'
@@ -150,6 +152,7 @@ CSRF_COOKIE_HTTPONLY = True
 CSRF_COOKIE_SAMESITE = 'Lax'
 
 SECURE_CONTENT_TYPE_NOSNIFF = True
+
 SECURE_BROWSER_XSS_FILTER = True
 X_FRAME_OPTIONS = 'DENY'
 
@@ -158,3 +161,7 @@ SECURE_SSL_REDIRECT = False
 SECURE_BROWSER_XSS_FILTER = False
 SECURE_CONTENT_TYPE_NOSNIFF = False
 SECURE_HSTS_SECONDS = 0
+
+#CSP_DEFAULT_SRC = ("'self'",)
+#CSP_REPORT_ONLY = True
+
