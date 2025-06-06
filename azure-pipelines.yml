@@ -55,9 +55,6 @@ stages:
         snyk code test --severity-threshold=high
       displayName: 'Run Snyk Scan'
 
-
-
-
 - stage: CD
   displayName: 'CD (Inclueding Zap)'
   jobs:
@@ -75,3 +72,41 @@ stages:
         dockerfile: dockerfile
         tags: |
           latest
+
+
+  - job: Deploy
+    displayName: 'Deploy'
+
+    steps:
+
+    - script: |
+        docker stop Azure-VM-SecureCart || true
+        docker rm Azure-VM-SecureCart || true
+        docker pull tuzzle/ccse-2:latest
+        docker run -d --name Azure-VM-SecureCart -p 8000:8000 tuzzle/ccse-2:latest
+      displayName: 'Deploy'
+      
+  - job: Zap
+    displayName: 'Zap Scan'
+
+    steps:
+
+    - script: |
+
+        docker run -t owasp/zap2docker-stable zap-baseline.py \
+        -t http://localhost:8000 \
+        -g gen.conf \
+        -r zap_report.html \
+        -J zap_report.json \
+        -x zap_report.xml
+      displayName: 'Zap Scan'
+
+    - task: PublishPipelineArtifact@1
+      inputs:
+        targetPath: '$(System.DefaultWorkingDirectory)/zap_report.html'
+        artifact: 'zapReport'
+        publishLocation: 'pipeline'
+      displayName: 'Publish Zap Report'     
+
+
+
